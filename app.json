@@ -12,7 +12,8 @@
     },
     "updates": {
       "enabled": true,
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/df7d5d36-89f2-4ef6-9dde-21e8e454a64b"
     },
     "ios": {
       "icon": "./assets/expo.icon",
@@ -47,6 +48,17 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "df7d5d36-89f2-4ef6-9dde-21e8e454a64b"
+      }
+    },
+    "owner": "ferdi.oosthuizen"
   }
 }

@@ -4,9 +4,23 @@ A simple neighbourhood watch app for Pinelands, Cape Town, for iPhone and Androi
 Patrollers see each other on a live map and can raise incidents. Residents get one
 big emergency button. Full details are in [docs/BRIEF.md](docs/BRIEF.md).
 
-**Current status: Version 0.1, milestone 1 ("Hello Pinelands").** The app is a
+**Current status: Version 0.1, milestone 1 ("Hello Pinelands") published.** The app is a
 single test screen that proves the publish-to-phone path works. No location,
 map or alerts yet.
+
+## Open the latest test version on your phone
+
+1. Install **Expo Go** from the App Store (iPhone) or Play Store (Android) and sign in
+   with the Expo account `ferdi.oosthuizen`.
+2. Scan this QR code with the phone's camera, or open the
+   [Expo project page](https://expo.dev/accounts/ferdi.oosthuizen/projects/pinelands-watch)
+   and use its Preview QR code.
+
+![Expo Go QR code for the preview channel](docs/expo-go-preview-qr.png)
+
+The QR code always points at the newest update on the `preview` branch, so it does
+not change between milestones. Expo Go caches the app; if an old version appears,
+pull down on the Expo Go home screen or reopen the link.
 
 ---
 
@@ -47,9 +61,12 @@ the free **Expo Go** app. One-off setup:
 Publishing a test version (Claude Code runs this after each milestone):
 
 ```bash
-npx eas-cli@latest update:configure      # first time only: links the project to your Expo account
-npx eas-cli@latest update --branch preview --message "what changed"
+npx eas-cli@latest update --branch preview --environment preview --message "what changed"
 ```
+
+The project is already linked to the Expo account (`owner` and `extra.eas.projectId`
+in `app.json`). For a brand-new Expo account run `npx eas-cli@latest init` and
+`npx eas-cli@latest update:configure` once first.
 
 The command prints a link to the update on expo.dev. Open that link on the iPhone
 (or scan its QR code with the Camera app) and it opens in Expo Go. Anyone with Expo Go
