@@ -1,98 +1,100 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import Constants from "expo-constants";
+import * as Updates from "expo-updates";
+import { BigButton } from "@/components/big-button";
+import { colors, layout, type } from "@/constants/theme";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+/**
+ * Milestone 1: "Hello Pinelands".
+ * The only job of this screen is to prove that a build published from the
+ * cloud opens on Ferdi's iPhone in Expo Go and that a big button responds to a tap.
+ */
+export default function Index() {
+  const [taps, setTaps] = useState(0);
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+  const appVersion = Constants.expoConfig?.version ?? "unknown";
+  const updateInfo = Updates.isEmbeddedLaunch
+    ? "Running the built-in copy (no update loaded yet)"
+    : `Update loaded: ${Updates.updateId?.slice(0, 8) ?? "yes"}`;
+
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title} maxFontSizeMultiplier={1.4}>
+        Hello Pinelands 👋
+      </Text>
+      <Text style={styles.body}>
+        This is the very first test version of the neighbourhood watch app. If
+        you can read this on your phone, the test path from the cloud to your
+        iPhone works.
+      </Text>
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+      <View style={styles.spacer} />
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      <BigButton
+        label={taps === 0 ? "Tap me to test" : `It works! Tapped ${taps} time${taps === 1 ? "" : "s"}`}
+        onPress={() => setTaps((n) => n + 1)}
+      />
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+      <View style={styles.spacer} />
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+      <View style={styles.infoCard}>
+        <Text style={styles.infoLabel}>Version</Text>
+        <Text style={styles.infoValue}>{appVersion} (demo)</Text>
+        <Text style={styles.infoLabel}>Build status</Text>
+        <Text style={styles.infoValue}>{updateInfo}</Text>
+        <Text style={styles.infoLabel}>Update channel</Text>
+        <Text style={styles.infoValue}>{Updates.channel || "none (local dev server)"}</Text>
+      </View>
+
+      <Text style={styles.footnote}>
+        Nothing is tracked or shared yet. Location, map and alerts come in later
+        test versions.
+      </Text>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    flexGrow: 1,
+    padding: layout.screenPadding,
+    backgroundColor: colors.background,
   },
   title: {
-    textAlign: 'center',
+    fontSize: type.title,
+    fontWeight: "800",
+    color: colors.text,
+    marginBottom: 16,
   },
-  code: {
-    textTransform: 'uppercase',
+  body: {
+    fontSize: type.bodyLarge,
+    lineHeight: 30,
+    color: colors.text,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  spacer: { height: 28 },
+  infoCard: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderWidth: 1,
+    borderRadius: layout.radius,
+    padding: 16,
+    gap: 4,
+  },
+  infoLabel: {
+    fontSize: type.body,
+    color: colors.textMuted,
+    marginTop: 8,
+  },
+  infoValue: {
+    fontSize: type.body,
+    fontWeight: "600",
+    color: colors.text,
+  },
+  footnote: {
+    marginTop: 28,
+    fontSize: type.body,
+    lineHeight: 26,
+    color: colors.textMuted,
   },
 });

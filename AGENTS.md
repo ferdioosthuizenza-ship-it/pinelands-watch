@@ -1,3 +1,11 @@
+# Pinelands Watch: project notes for Claude Code
+
+Read docs/BRIEF.md first. Key rules: simple beats clever (18pt+ text, 64pt buttons, red only for emergency), nothing waits on AI, patroller locations only visible to active patrollers (enforced with RLS), everything free in v0.1, commit to `dev`, keep README.md and CHANGELOG.md current.
+
+In the cloud session `npx expo install` and `npx expo lint` may fail if expo.dev is blocked. Fallback: read the pinned version from `node_modules/expo/bundledNativeModules.json` and `npm install` it directly.
+
+---
+
 This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
 
 ## Expo has changed — do not trust your training data
