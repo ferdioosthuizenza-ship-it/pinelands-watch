@@ -14,3 +14,5 @@ One short entry per working session, newest first.
 - Later the same day, after Ferdi set up GitHub, the Expo account and network access:
   pushed `main` and `dev` to GitHub, linked the project to Expo (`@ferdi.oosthuizen/pinelands-watch`),
   and published the first update to the `preview` branch. Added the Expo Go QR code to `docs/`.
+- Fixed "There was a problem running the requested project" in Expo Go: the `preview`
+  channel did not exist yet. Created it with `eas channel:create preview`.

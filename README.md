@@ -65,8 +65,10 @@ npx eas-cli@latest update --branch preview --environment preview --message "what
 ```
 
 The project is already linked to the Expo account (`owner` and `extra.eas.projectId`
-in `app.json`). For a brand-new Expo account run `npx eas-cli@latest init` and
-`npx eas-cli@latest update:configure` once first.
+in `app.json`) and the `preview` channel exists. For a brand-new Expo account run
+`npx eas-cli@latest init`, `npx eas-cli@latest update:configure` and
+`npx eas-cli@latest channel:create preview` once first. Expo Go opens a *channel*,
+so an update published to a branch is invisible until a channel of the same name exists.
 
 The command prints a link to the update on expo.dev. Open that link on the iPhone
 (or scan its QR code with the Camera app) and it opens in Expo Go. Anyone with Expo Go
